@@ -38,6 +38,19 @@
             "                      BBX                     XXX",
             "    XXXX      XXX     BBBX          XXXXX", 
             "XXXXBBBB  XXXXBB  XX  BBBBXX   XXXX"
+        ],
+        [
+            "  P                                   ",
+            " XXX                                XXXX",
+            "                      XXXXX       XXBBBB",
+            "       XXXXX  XXXXX           XX    ",
+            "                            XXBB ",
+            "XXXXX        XX   X     X        XX",
+            "BBBBB        BB   BX    BX     XXB     ",
+            "BBB     XX                 XX   ",  
+            "                    C  XX       XXX",
+            "    XXXX      XXX  XX      XXXXXBBB",
+            "XXXXBBBB   XXXBB       XXXXBB"
         ]
     ]
 }
