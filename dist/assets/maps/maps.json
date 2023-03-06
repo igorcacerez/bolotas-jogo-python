@@ -1,0 +1,43 @@
+{
+    "maps": [
+        [
+            "                            ",
+            "                            ",
+            "                            ",
+            "       XXXX           XX    ",
+            "   P                        ",
+            "XXXXX         XX         XX ",
+            " BBBB       XX              ",
+            " BB    X  XXBB    XX  XX    ",
+            "       B  BBBB    BB  BBX   ",
+            "    XXXB  BBBBXX  BB  BBBX C",
+            "XXXXBBBB  BBBBBB  BB  BBBBXX"
+        ],
+        [
+            "  P                         ",
+            " XXX                        ",
+            "                       C     ",
+            "       XXXXX           XX    ",
+            "                            ",
+            "XXXXX        XX   X     XX ",
+            " B          XB              ",
+            " BX    X  XXBB    XX  XX    ",
+            "       B              BBX   ",
+            "    XXXB      XXX  XX  BBXX ",
+            "XXXXBBBB  XXXXBB  XB  BBBBBX"
+        ],
+        [
+            "                             XXX                   C",
+            "              XXXX               XXXX           XXXXXXXX      XXXX",
+            "     XXXX                                                           XXXXXXXX",
+            "                      XX     XXX      XX   XXX      XXXX",
+            "                                 X                              XXXX",
+            "        XX   X     XX    XX                 XX     XXX    XXXXX",
+            "  P                         XXX       ",
+            " XX    X  XXXX    XX  XX     BBXX        XXXX        XXX ",
+            "                      BBX                     XXX",
+            "    XXXX      XXX     BBBX          XXXXX", 
+            "XXXXBBBB  XXXXBB  XX  BBBBXX   XXXX"
+        ]
+    ]
+}
