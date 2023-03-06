@@ -12,6 +12,9 @@ class Game:
         self.maps = aux["maps"]
         self.current_level = Level(self.maps[self.stage])
         
+        self.music = pygame.mixer.Sound("assets/sounds/bg.mp3")
+        self.music.play(-1)
+        
     def events(self, event):
         pass
 
@@ -21,9 +24,12 @@ class Game:
     def update(self):
         
         if self.current_level.active == False and self.current_level.gameover == False: 
+            pygame.mixer.Sound("assets/sounds/next-stage.mp3").play()
             self.stage += 1
             self.current_level = Level(self.maps[self.stage])
         elif self.current_level.active == True and self.current_level.gameover == True:
+            self.music.stop()
+            pygame.mixer.Sound("assets/sounds/gameover.mp3").play()
             self.active = False
         
         self.current_level.update()
