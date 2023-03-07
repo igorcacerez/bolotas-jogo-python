@@ -2,6 +2,7 @@ import random
 import pygame
 from scripts.animatedbg import AnimatedBg
 from scripts.camera import Camera
+from scripts.elements.coin import Coin
 from scripts.elements.player import Player
 from scripts.elements.ui import Ui
 from scripts.fade import Fade
@@ -18,6 +19,7 @@ class Level():
         self.all_sprites = Camera()
         self.colision_sprites = pygame.sprite.Group()
         self.bg_group = pygame.sprite.Group()
+        self.coin_group = pygame.sprite.Group()
         
         Obj("assets/bg/bg.png", [0, 0], [self.bg_group])
         
@@ -29,9 +31,8 @@ class Level():
         self.tick = 0
         self.player = Player([0, 0], [self.all_sprites], self.colision_sprites)
         
-        self.generate_map()
-        
         self.hud_ui = Ui()
+        self.generate_map()
 
     def generate_map(self):
         for row_index, row in enumerate(self.worldmap):
@@ -40,15 +41,21 @@ class Level():
                 y = row_index * TILE_SIZE
                 
                 if col == "X":
-                    Obj("assets/title/tile.png", [x, y], [self.all_sprites, self.colision_sprites])
-                elif col == "B":
-                    Obj("assets/title/bloco.png", [x, y], [self.all_sprites, self.colision_sprites])
+                    if (int(row_index) - 1) > 0:
+                        if self.worldmap[int(row_index) - 1][col_index] == "X":
+                            Obj("assets/title/bloco.png", [x, y], [self.all_sprites, self.colision_sprites])
+                        else:
+                            Obj("assets/title/tile.png", [x, y], [self.all_sprites, self.colision_sprites])
+                    else:
+                        Obj("assets/title/tile.png", [x, y], [self.all_sprites, self.colision_sprites])
                 elif col == "P":
                     self.player.rect.x = x
                     self.player.rect.y = y
                 elif col == "C":
                     self.finish.rect.x = x
                     self.finish.rect.y = y
+                elif col == "M":
+                    Coin([x, y], [self.all_sprites, self.coin_group], self.player, self.hud_ui)
     
     def events(self, event):
         pass 
@@ -71,6 +78,14 @@ class Level():
             
             if self.hud_ui.lifes < 0:
                 self.gameover = True
+           
+    def get_coin(self):
+        for coin in self.coin_group:
+            if self.player.rect.colliderect(coin.rect):
+                self.coin_group.remove(coin)
+                self.hud_ui.coins += 1
+                self.hud_ui.score += coin.pontos
+                break        
                 
     def update(self):
         self.all_sprites.update()
