@@ -3,23 +3,25 @@ import pygame
 from scripts.animatedbg import AnimatedBg
 from scripts.camera import Camera
 from scripts.elements.coin import Coin
+from scripts.elements.enemy import Enemy
 from scripts.elements.player import Player
 from scripts.elements.ui import Ui
 from scripts.fade import Fade
 from scripts.obj import Obj
 from scripts.scene import Scene
 from scripts.settings import *
-from scripts.text import Text
+from scripts.elements.water import Water
 
 class Level():
 
-    def __init__(self, worldmap):
+    def __init__(self, worldmap, ui):
         
         self.display = pygame.display.get_surface()
         self.all_sprites = Camera()
         self.colision_sprites = pygame.sprite.Group()
         self.bg_group = pygame.sprite.Group()
         self.coin_group = pygame.sprite.Group()
+        self.water_group = pygame.sprite.Group()
         
         Obj("assets/bg/bg.png", [0, 0], [self.bg_group])
         
@@ -31,7 +33,7 @@ class Level():
         self.tick = 0
         self.player = Player([0, 0], [self.all_sprites], self.colision_sprites)
         
-        self.hud_ui = Ui()
+        self.hud_ui = ui
         self.generate_map()
 
     def generate_map(self):
@@ -42,7 +44,7 @@ class Level():
                 
                 if col == "X":
                     if (int(row_index) - 1) > 0:
-                        if self.worldmap[int(row_index) - 1][col_index] == "X":
+                        if self.worldmap[int(row_index) - 1][col_index] == "X" or self.worldmap[int(row_index) - 1][col_index] == "A":
                             Obj("assets/title/bloco.png", [x, y], [self.all_sprites, self.colision_sprites])
                         else:
                             Obj("assets/title/tile.png", [x, y], [self.all_sprites, self.colision_sprites])
@@ -56,6 +58,10 @@ class Level():
                     self.finish.rect.y = y
                 elif col == "M":
                     Coin([x, y], [self.all_sprites, self.coin_group], self.player, self.hud_ui)
+                elif col == "A": 
+                    Water([x,y], [self.all_sprites, self.water_group])
+                elif col == "V":
+                    Enemy([x,y], self.player, self.all_sprites, self.morreu)
     
     def events(self, event):
         pass 
@@ -66,18 +72,31 @@ class Level():
         self.hud_ui.draw()
         self.fade.draw()
                 
+    def water_colision(self):
+        for water in self.water_group:
+            if self.player.rect.colliderect(water.rect):
+                return True
+        return False
+                
     def next_stage(self):
         if self.player.rect.colliderect(self.finish.rect):
             self.active = False
             
-    def reset_position(self):
-        if self.player.rect.y > HEIGHT:
-            self.player.rect.x = 0
-            self.player.rect.y = 0
+    def morreu(self): 
+        self.player.rect.x = 0
+        self.player.rect.y = 0
+        
+        if self.hud_ui.coin >= 100: 
+            self.hud_ui.remove_coin()
+        else: 
             self.hud_ui.lifes -= 1
             
             if self.hud_ui.lifes < 0:
                 self.gameover = True
+            
+    def reset_position(self):
+        if self.player.rect.y > HEIGHT or self.water_colision():
+            self.morreu()
            
     def get_coin(self):
         for coin in self.coin_group:

@@ -33,6 +33,11 @@ class Ui:
             self.hud2.kill()
         elif self.lifes == 0:
             self.hud1.kill()
+            
+    
+    def remove_coin(self):
+        self.coin -= 100
+        self.text_coin.update_text(str(self.coin))
 
     def draw(self):
         self.ui_group.draw(self.display)

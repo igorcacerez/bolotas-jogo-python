@@ -1,3 +1,4 @@
+import asyncio
 import pygame, sys
 from scripts.menu import Menu
 from scripts.game import Game
@@ -19,7 +20,7 @@ class StartGame:
 
         self.fps = pygame.time.Clock()
     
-    def run(self):
+    async def run(self):
         
         while True:
 
@@ -38,6 +39,8 @@ class StartGame:
                     pygame.quit()
                     sys.exit()
                 self.current_scene.events(event)
+                
+            await asyncio.sleep(0) # This line is important
             
             self.fps.tick(60)
             self.display.fill(BG_COLOR)

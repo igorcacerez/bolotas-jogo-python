@@ -18,7 +18,6 @@ class Coin(Obj):
             self.ui.score += self.pontos
             self.ui.coin += 1
             self.ui.text_coin.update_text(str(self.ui.coin))
-            
         
     def update(self):
         self.animation(self.speed, 16, "assets/coin/")
